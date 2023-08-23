@@ -1,7 +1,6 @@
 {
   "name": "bd_tcc",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -22,5 +21,6 @@
     "@babel/core": "^7.22.1",
     "@babel/node": "^7.22.1",
     "@babel/preset-env": "^7.22.4"
-  }
+  },
+  "description": ""
 }
