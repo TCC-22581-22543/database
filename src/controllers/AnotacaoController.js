@@ -73,3 +73,5 @@ class AnotacaoController {
     }
     
 }
+
+export default new AnotacaoController();

@@ -55,7 +55,8 @@ class UserController {
   }
 
   async update(req, res) {
-    const { id, name, email, password } = req.body;
+    const {name, email, password } = req.body;
+    const { id } = req.params;
 
     const userExist = await User.findById(id); 
 
