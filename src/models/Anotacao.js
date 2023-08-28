@@ -1,7 +1,7 @@
 import mongoose, { model } from "mongoose";
 
 const Anotacao = model('Anotacao',{
-    _id: mongoose.Schema.Types.ObjectId,
+    titulo: String,
     texto: String,
     criado_em: Date,
     id_usuario: {

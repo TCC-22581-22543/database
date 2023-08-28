@@ -1,4 +1,4 @@
-import Anotacao from "../models/Anotacao";
+import Anotacao from "../models/Anotacao.js";
 
 class AnotacaoController {
     async create(req, res){
@@ -7,7 +7,7 @@ class AnotacaoController {
         if (!title) {
             return res
             .status(400)
-            .json({ error: "Usuário já existe, insira um email diferente" });
+            .json({ error: "Erro ao cadastrar informações" });
         }
       
         if (!text) {
@@ -17,12 +17,11 @@ class AnotacaoController {
         }
 
         const newAnotation = await Anotacao.create({
-            id,
-            title,
-            text
+            titulo: title,
+            texto: text
         });
 
-        return res.status(200).json({newAnotation});
+        return res.status(200).json(newAnotation);
     }
 
     async read(req, res){
@@ -33,10 +32,13 @@ class AnotacaoController {
         if(!anotation){
             return res
             .status(400)
-            .json({ message: "Usuário não encontrado, tente novamente!" });
+            .json({ message: "Anotação não encontrada, tente novamente!" });
         }
 
-        return res.status(200).json({anotation});
+        return res.status(200).json({
+            titulo: anotation.titulo,
+            texto: anotation.texto
+        });
     }
 
     async update(req, res){
@@ -69,7 +71,7 @@ class AnotacaoController {
             return res.status(400).json({message: "Anotação não encontrada"});
         }
 
-        await findId.destroy();
+        await findId.deleteOne();
     }
     
 }

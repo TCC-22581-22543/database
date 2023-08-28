@@ -79,13 +79,11 @@ class UserController {
       return res.status(400).json({ message: "Erro" });
     }
 
-    const updatedUser = await userExist.update({
-      nome: name,
-      email,
-      senha: password
-    })
+    const updatedUser = await userExist.updateOne({
+      nome: name
+    });
 
-    return res.status(200).json({ user: updatedUser });
+    return res.status(200).json({ nome: name });
   }
 
   async delete(req, res){
@@ -99,7 +97,7 @@ class UserController {
       .json({ message: "Usuário não encontrado, tente novamente!" });
     }
 
-    await userFound.destroy()
+    await userFound.deleteOne()
 
     return res.status(200).json({message: "Usuário deletado."})
   }
