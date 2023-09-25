@@ -1,77 +1,68 @@
 import User from "../models/User.js";
+import bcrypt from "bcrypt";
 
 class UserController {
   async create(req, res) {
     const { name, email, password } = req.body;
 
-    const userExist = await User.findOne({ where: { email } });
+    const userExist = await User.findOne({ email });
 
     if (userExist) {
       return res
-      .status(400)
-      .json({ error: "Usuário já existe, insira um email diferente" });
+        .status(400)
+        .json({ error: "Usuário já existe, insira um email diferente" });
     }
 
     if (!name) {
-      return res
-      .status(400)
-      .json({ message: "Erro ao cadastrar informações" });
+      return res.status(400).json({ message: "Erro ao cadastrar informações" });
     }
 
     if (!email) {
-      return res
-      .status(400)
-      .json({ message: "Erro ao cadastrar informações" });
+      return res.status(400).json({ message: "Erro ao cadastrar informações" });
     }
 
     if (!password) {
-      return res
-      .status(400)
-      .json({ message: "Erro ao cadastrar informações" });
+      return res.status(400).json({ message: "Erro ao cadastrar informações" });
     }
 
     const newUser = await User.create({
       nome: name,
       email: email,
-      senha: password
-    })
+      senha: await bcrypt.hash(password, 8),
+    });
 
     return res.status(200).json({ user: newUser });
   }
 
-  async show(req, res){
+  async show(req, res) {
     const { id } = req.params;
 
-    const userFound = await User.findById(id); 
+    const userFound = await User.findById(id);
 
-    if(!userFound)
+    if (!userFound)
       return res
-      .status(400)
-      .json({ message: "Usuário não encontrado, tente novamente!" });
+        .status(400)
+        .json({ message: "Usuário não encontrado, tente novamente!" });
 
-
-    return res.status(200).json({userFound});
-    
+    return res.status(200).json({ userFound });
   }
 
   async update(req, res) {
-    const {name, email, password } = req.body;
+    const { name, email, password } = req.body;
     const { id } = req.params;
 
-    const userExist = await User.findById(id); 
+    const userExist = await User.findById(id);
 
     if (!userExist) {
-      return res
-      .status(400)
-      .json({ error: "Usuário não encontrado." });
+      return res.status(400).json({ error: "Usuário não encontrado." });
     }
 
     if (email !== userExist.email) {
       const checkEmail = await User.findOne({ where: { email } });
       if (checkEmail) {
         return res
-        .status(400)
-        .json({ error: "Esse email já está sendo usado por outro usuário." });
+          .status(400)
+          .json({ error: "Esse email já está sendo usado por outro usuário." });
       }
     }
 
@@ -80,28 +71,27 @@ class UserController {
     }
 
     const updatedUser = await userExist.updateOne({
-      nome: name
+      nome: name,
     });
 
     return res.status(200).json({ nome: name });
   }
 
-  async delete(req, res){
+  async delete(req, res) {
     const { id } = req.params;
 
     const userFound = await User.findById(id);
 
-    if(!userFound){
+    if (!userFound) {
       return res
-      .status(400)
-      .json({ message: "Usuário não encontrado, tente novamente!" });
+        .status(400)
+        .json({ message: "Usuário não encontrado, tente novamente!" });
     }
 
-    await userFound.deleteOne()
+    await userFound.deleteOne();
 
-    return res.status(200).json({message: "Usuário deletado."})
+    return res.status(200).json({ message: "Usuário deletado." });
   }
-
 }
 
 export default new UserController();
