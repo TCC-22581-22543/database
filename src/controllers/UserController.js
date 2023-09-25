@@ -47,6 +47,18 @@ class UserController {
     return res.status(200).json({ userFound });
   }
 
+  async returnAllUsers(req, res) {
+    try {
+      const users = await User.find();
+
+      return res.status(200).json({ users });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Erro ao buscar usuários", error });
+    }
+  }
+
   async update(req, res) {
     const { name, email, password } = req.body;
     const { id } = req.params;
