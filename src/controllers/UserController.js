@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 class UserController {
   async create(req, res) {
-    const { name, email, password } = req.body;
+    const { name, email, password, perfil } = req.body;
 
     const userExist = await User.findOne({ email });
 
@@ -14,21 +14,34 @@ class UserController {
     }
 
     if (!name) {
-      return res.status(400).json({ message: "Erro ao cadastrar informações" });
+      return res
+        .status(400)
+        .json({ message: "Erro ao cadastrar informações. Nome" });
     }
 
     if (!email) {
-      return res.status(400).json({ message: "Erro ao cadastrar informações" });
+      return res
+        .status(400)
+        .json({ message: "Erro ao cadastrar informações. Email" });
     }
 
     if (!password) {
-      return res.status(400).json({ message: "Erro ao cadastrar informações" });
+      return res
+        .status(400)
+        .json({ message: "Erro ao cadastrar informações. Senha" });
+    }
+
+    if (!perfil) {
+      return res
+        .status(400)
+        .json({ message: "Erro ao cadastrar informações. Perfil" });
     }
 
     const newUser = await User.create({
       nome: name,
       email: email,
       senha: await bcrypt.hash(password, 8),
+      perfil: perfil,
     });
 
     return res.status(200).json({ user: newUser });
@@ -60,7 +73,7 @@ class UserController {
   }
 
   async update(req, res) {
-    const { name, email, password } = req.body;
+    const { name, email } = req.body;
     const { id } = req.params;
 
     const userExist = await User.findById(id);
@@ -86,7 +99,7 @@ class UserController {
       nome: name,
     });
 
-    return res.status(200).json({ nome: name });
+    return res.status(200).json(updatedUser);
   }
 
   async delete(req, res) {

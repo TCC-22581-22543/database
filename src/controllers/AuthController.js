@@ -17,7 +17,7 @@ class AuthController {
       return res.status(401).json({ error: "Wrong credentials" });
     }
 
-    const { id, name } = user;
+    const { id, nome, perfil } = user;
 
     await User.create({
       user_id: id,
@@ -26,8 +26,9 @@ class AuthController {
     return res.json({
       user: {
         id,
-        name,
+        nome,
         email,
+        perfil,
       },
       token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
@@ -36,7 +37,6 @@ class AuthController {
   }
 }
 
-// Função fora da classe
 async function checkPassword(providedPassword, storedPasswordHash) {
   if (!providedPassword || !storedPasswordHash) {
     throw new Error("Invalid password or stored hash.");
