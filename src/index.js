@@ -6,11 +6,7 @@ import routes from "./routes/routes.js";
 import cors from "cors";
 
 const app = express();
-app.use(
-  cors({
-    origin: "https://database-r1lmng76d-matheus-chiarellis-projects.vercel.app",
-  })
-);
+app.use(cors());
 dotenv.config();
 
 app.use(urlencoded({ extended: true }));
