@@ -2,13 +2,13 @@
 import express, { urlencoded, json } from "express";
 import dotenv from "dotenv";
 import { connect } from "mongoose";
-import routes from "./routes/index.js";
+import routes from "./routes/routes.js";
 import cors from "cors";
 
 const app = express();
 app.use(
   cors({
-    origin: "exp://192.168.15.100:8081",
+    origin: "https://database-bf9ssgbhz-matheus-chiarellis-projects.vercel.app",
   })
 );
 dotenv.config();

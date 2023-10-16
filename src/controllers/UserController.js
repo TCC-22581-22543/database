@@ -49,6 +49,7 @@ class UserController {
 
   async show(req, res) {
     const { id } = req.params;
+    console.log(id);
 
     const userFound = await User.findById(id);
 
