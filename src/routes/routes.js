@@ -1,6 +1,7 @@
 import AnotacaoController from "../controllers/AnotacaoController.js";
 import UserController from "../controllers/UserController.js";
 import AuthController from "../controllers/AuthController.js";
+import EspecieController from "../controllers/EspecieController.js";
 import { Router } from "express";
 
 const routes = Router();
@@ -17,5 +18,8 @@ routes.post("/notes", AnotacaoController.create);
 routes.get("/readNotes/:id", AnotacaoController.read);
 routes.put("/updateNotes/:id", AnotacaoController.update);
 routes.delete("/deleteNotes/:id", AnotacaoController.delete);
+
+routes.get("/showAllEspecies", EspecieController.returnAllEspecies);
+routes.get("/readEspecies/:id", EspecieController.read);
 
 export default routes;

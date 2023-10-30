@@ -6,6 +6,11 @@ const Especie = model('Especie', {
     nome_cientifico: String,
     classificacao: String,
     tipo_alimentacao: String,
+    bioma: String,
+    image_url: String,
+    evolucao: String,
+    situacao_atual: String,
+
 });
 
 export default Especie;
