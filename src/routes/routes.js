@@ -3,6 +3,7 @@ import UserController from "../controllers/UserController.js";
 import AuthController from "../controllers/AuthController.js";
 import { Router } from "express";
 import EspecieController from "../controllers/EspecieController.js";
+import auth from "../middlewares/auth.js";
 
 const routes = Router();
 
@@ -14,8 +15,8 @@ routes.delete("/deleteUser/:id", UserController.delete);
 
 routes.post("/login", AuthController.login);
 
-routes.post("/notes", AnotacaoController.create);
-routes.get("/readNotes/:id", AnotacaoController.read);
+routes.post("/notes", auth, AnotacaoController.create);
+routes.get("/readNotes", auth, AnotacaoController.returnNotes);
 routes.put("/updateNotes/:id", AnotacaoController.update);
 routes.delete("/deleteNotes/:id", AnotacaoController.delete);
 

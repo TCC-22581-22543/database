@@ -1,79 +1,67 @@
 import Anotacao from "../models/Anotacao.js";
 
 class AnotacaoController {
-    async create(req, res){
-        const {title, text} = req.body;
+  async create(req, res) {
+    const { title, text } = req.body;
+    const { id } = req.user;
 
-        if (!title) {
-            return res
-            .status(400)
-            .json({ error: "Erro ao cadastrar informações" });
-        }
-      
-        if (!text) {
-            return res
-            .status(400)
-            .json({ message: "Erro ao cadastrar informações" });
-        }
-
-        const newAnotation = await Anotacao.create({
-            titulo: title,
-            texto: text
-        });
-
-        return res.status(200).json(newAnotation);
+    if (!title) {
+      return res.status(400).json({ message: "Anotação sem título!" });
     }
 
-    async read(req, res){
-        const { id } = req.params;
-
-        const anotation = await Anotacao.findById(id); 
-
-        if(!anotation){
-            return res
-            .status(400)
-            .json({ message: "Anotação não encontrada, tente novamente!" });
-        }
-
-        return res.status(200).json({
-            titulo: anotation.titulo,
-            texto: anotation.texto
-        });
+    if (!text) {
+      return res
+        .status(400)
+        .json({ message: "É necessário ter conteúdo na anotação!" });
     }
 
-    async update(req, res){
-        const { id, title, text } = req.body;
+    const newAnotation = await Anotacao.create({
+      id_usuario: id,
+      titulo: title,
+      texto: text,
+    });
 
-        const anotation = await Anotacao.findById(id); 
+    return res.status(200).json(newAnotation);
+  }
 
-        if(!anotation){
-            return res
-            .status(400)
-            .json({ message: "Anotação não encontrada!" });
-        }
-        
-        let updatedFields = {};
+  async returnNotes(req, res) {
+    const { id } = req.user;
 
-        if(title) updatedFields.title = title;
-        if(text) updatedFields.text = text;
+    const anotations = await Anotacao.find({ id_usuario: id });
 
-        const updatedNotation = await userExist.update(updatedFields);
+    return res.status(200).json(anotations);
+  }
 
-        return res.status(200).json({ anotation: updatedNotation });
+  async update(req, res) {
+    const { id, title, text } = req.body;
+
+    const anotation = await Anotacao.findById(id);
+
+    if (!anotation) {
+      return res.status(400).json({ message: "Anotação não encontrada!" });
     }
 
-    async delete(req, res){
-        const { id } = req.params;
+    let updatedFields = {};
 
-        const findId = await Anotacao.findById(id);
+    if (title) updatedFields.title = title;
+    if (text) updatedFields.text = text;
 
-        if(!findId){
-            return res.status(400).json({message: "Anotação não encontrada"});
-        }
+    const updatedNotation = await userExist.update(updatedFields);
 
-        await findId.deleteOne();
+    return res.status(200).json({ anotation: updatedNotation });
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const findId = await Anotacao.findById(id);
+
+    if (!findId) {
+      return res.status(400).json({ message: "Anotação não encontrada" });
     }
-    
+
+    await findId.deleteOne();
+  }
 }
 
 export default new AnotacaoController();
