@@ -25,30 +25,50 @@ class AnotacaoController {
   }
 
   async returnNotes(req, res) {
-    const { id } = req.user;
+    const { id } = req.params;
 
-    const anotations = await Anotacao.find({ id_usuario: id });
+    const anotations = await Anotacao.find({ id_usuario: id.toString() });
 
     return res.status(200).json(anotations);
   }
 
+  async returnNotesById(req, res) {
+    const { id } = req.params.id;
+
+    try {
+      const note = await Anotacao.findOne({ id });
+
+      if (!note) {
+        return res.status(404).json({ error: "Note not found" });
+      }
+      return res.json(note);
+    } catch (error) {
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
   async update(req, res) {
-    const { id, title, text } = req.body;
+    const { title, text } = req.body;
+    const { id } = req.params;
 
     const anotation = await Anotacao.findById(id);
 
     if (!anotation) {
-      return res.status(400).json({ message: "Anotação não encontrada!" });
+      return res.status(404).json({ message: "Anotação não encontrada!" }); // Updated to 404 for "Not Found"
     }
 
     let updatedFields = {};
 
-    if (title) updatedFields.title = title;
-    if (text) updatedFields.text = text;
+    if (title) updatedFields.titulo = title;
+    if (text) updatedFields.texto = text;
 
-    const updatedNotation = await userExist.update(updatedFields);
+    try {
+      const updatedNotation = await anotation.updateOne(updatedFields);
 
-    return res.status(200).json({ anotation: updatedNotation });
+      return res.status(200).json({ anotation: updatedNotation });
+    } catch (error) {
+      return res.status(500).json({ message: "Erro ao atualizar a anotação." });
+    }
   }
 
   async delete(req, res) {
@@ -61,6 +81,8 @@ class AnotacaoController {
     }
 
     await findId.deleteOne();
+
+    return res.status(200).json({ message: "Anotação deletada!" });
   }
 }
 
