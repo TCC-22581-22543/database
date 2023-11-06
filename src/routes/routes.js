@@ -21,7 +21,7 @@ routes.get("/readNotes/:id", AnotacaoController.read);
 routes.put("/updateNotes/:id", AnotacaoController.update);
 routes.delete("/deleteNotes/:id", AnotacaoController.delete);
 
-routes.get("/showAllEspecies", EspecieController.returnAllEspecies);
+routes.get("/species", EspecieController.returnAllEspecies);
 routes.get("/readEspecies/:id", EspecieController.read);
 routes.post("/upload-image/:id", upload.single("file"),EspecieController.updatedPicture);
 
