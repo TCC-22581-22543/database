@@ -12,7 +12,7 @@ class EspecieController {
         .json({ message: "Especie não encontrada, tente novamente!" });
     }
 
-    especie.image_url = especie.image_url.replace(/\\/g, '/');
+    especie.image_url = especie.image_url.replace(/\\/g, "/");
 
     return res.status(200).json({
       nome: especie.nome,
@@ -29,18 +29,32 @@ class EspecieController {
   async returnAllEspecies(req, res) {
     try {
       const especies = await Especie.find();
-  
-      // Corrija as barras duplas nas URLs das imagens
-      especies.forEach(especie => {
-        especie.image_url = especie.image_url.replace(/\\/g, '/');
+
+      especies.forEach((especie) => {
+        especie.image_url = especie.image_url.replace(/\\/g, "/");
       });
-  
+
       return res.status(200).json({ especies });
     } catch (error) {
       return res.status(500).json({ message: "Erro ao buscar especie", error });
     }
   }
-  
+
+  async returnSpeciesById(req, res) {
+    try {
+      const { id } = req.params;
+
+      const specie = await Especie.findById(id);
+
+      if (!specie) {
+        return res
+          .status(400)
+          .json({ message: "Erro ao buscar especie", error });
+      }
+
+      return res.status(200).json({ specie });
+    } catch (error) {}
+  }
 
   async updatedPicture(req, res) {
     try {

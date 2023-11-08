@@ -23,6 +23,11 @@ routes.put("/updateNotes/:id", auth, AnotacaoController.update);
 routes.delete("/deleteNotes/:id", AnotacaoController.delete);
 
 routes.get("/species", EspecieController.returnAllEspecies);
+routes.get("/returnSpecieById/:id", EspecieController.returnSpeciesById);
 routes.get("/readEspecies/:id", EspecieController.read);
-routes.post("/upload-image/:id", upload.single("file"),EspecieController.updatedPicture);
+routes.post(
+  "/upload-image/:id",
+  upload.single("file"),
+  EspecieController.updatedPicture
+);
 export default routes;
