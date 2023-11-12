@@ -6,9 +6,7 @@ import routes from "./routes/routes.js";
 import cors from "cors";
 
 const app = express();
-app.use(cors({ 
-  
-}));
+app.use(cors({}));
 dotenv.config();
 
 app.use(urlencoded({ extended: true }));
@@ -22,7 +20,7 @@ app.get("/", (req, res) => {
 
 connect(process.env.MONGODB_CONNECTION_STRING)
   .then(() => {
-    app.listen(3333, () => {
+    app.listen(3000, () => {
       console.log("Server started!");
     });
   })
