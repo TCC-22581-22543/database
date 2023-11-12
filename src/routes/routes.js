@@ -3,10 +3,19 @@ import UserController from "../controllers/UserController.js";
 import AuthController from "../controllers/AuthController.js";
 import EspecieController from "../controllers/EspecieController.js";
 import { Router } from "express";
+import express from "express";
 import auth from "../middlewares/auth.js";
+import path from "path";
+
 
 const routes = Router();
 import upload from "../config/multer.js";
+
+const __filename = new URL(import.meta.url).pathname;
+const dirname = path.dirname(__filename);
+
+routes.use('/uploads/especies', express.static(path.join(dirname, 'uploads/especies')));
+
 
 routes.post("/register", UserController.create);
 routes.get("/showUser/:id", UserController.show);
@@ -24,5 +33,4 @@ routes.delete("/deleteNotes/:id", AnotacaoController.delete);
 
 routes.get("/species", EspecieController.returnAllEspecies);
 routes.get("/readEspecies/:id", EspecieController.read);
-routes.post("/upload-image/:id", upload.single("file"),EspecieController.updatedPicture);
 export default routes;
