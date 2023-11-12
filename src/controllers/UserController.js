@@ -118,6 +118,8 @@ class UserController {
 
     return res.status(200).json({ message: "Usuário deletado." });
   }
+
+  async recoverPassword(req, res) {}
 }
 
 export default new UserController();

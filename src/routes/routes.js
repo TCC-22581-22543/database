@@ -2,6 +2,7 @@ import AnotacaoController from "../controllers/AnotacaoController.js";
 import UserController from "../controllers/UserController.js";
 import AuthController from "../controllers/AuthController.js";
 import EspecieController from "../controllers/EspecieController.js";
+import NewsController from "../controllers/NewsController.js";
 import { Router } from "express";
 import auth from "../middlewares/auth.js";
 
@@ -19,9 +20,10 @@ routes.post("/notes", auth, AnotacaoController.create);
 routes.get("/readNotes/:id", auth, AnotacaoController.returnNotes);
 routes.get("/returnNotesById/:id", auth, AnotacaoController.returnNotesById);
 routes.put("/updateNotes/:id", auth, AnotacaoController.update);
-routes.delete("/deleteNotes/:id", AnotacaoController.delete);
+routes.delete("/deleteNotes/:id", auth, AnotacaoController.delete);
 
 routes.get("/species", EspecieController.returnAllEspecies);
 routes.get("/returnSpecieById/:id", EspecieController.returnSpeciesById);
+routes.get("/readEspecies/:id", EspecieController.read);
 
 export default routes;

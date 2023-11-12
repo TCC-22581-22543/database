@@ -6,9 +6,12 @@ import routes from "./routes/routes.js";
 import cors from "cors";
 
 const app = express();
-app.use(cors({ 
-  origin: '192.168.56.100:3333'
-}));
+app.use(
+  cors({
+    origin:
+      "https://database-git-master-matheus-chiarellis-projects.vercel.app/",
+  })
+);
 dotenv.config();
 
 app.use(urlencoded({ extended: true }));
@@ -22,7 +25,7 @@ app.get("/", (req, res) => {
 
 connect(process.env.MONGODB_CONNECTION_STRING)
   .then(() => {
-    app.listen(3333, () => {
+    app.listen(3000, () => {
       console.log("Server started!");
     });
   })
