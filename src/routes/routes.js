@@ -5,9 +5,10 @@ import EspecieController from "../controllers/EspecieController.js";
 import { Router } from "express";
 import auth from "../middlewares/auth.js";
 
+
 const routes = Router();
-import upload from "../config/multer.js";
 import NewsController from "../controllers/NewsController.js";
+
 
 routes.post("/register", UserController.create);
 routes.get("/showUser/:id", UserController.show);
@@ -26,11 +27,6 @@ routes.delete("/deleteNotes/:id", auth, AnotacaoController.delete);
 routes.get("/species", EspecieController.returnAllEspecies);
 routes.get("/returnSpecieById/:id", EspecieController.returnSpeciesById);
 routes.get("/readEspecies/:id", EspecieController.read);
-routes.post(
-  "/upload-image/:id",
-  upload.single("file"),
-  EspecieController.updatedPicture
-);
+
 
 routes.get("/news", NewsController.returnNews);
-export default routes;
