@@ -34,7 +34,7 @@ class EspecieController {
         especie.image_url = especie.image_url.replace(/\\/g, "/");
       });
 
-      return res.status(200).json({ especies });
+      return res.status(200).json(especies);
     } catch (error) {
       return res.status(500).json({ message: "Erro ao buscar especie", error });
     }

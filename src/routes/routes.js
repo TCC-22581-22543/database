@@ -7,6 +7,7 @@ import auth from "../middlewares/auth.js";
 
 const routes = Router();
 import upload from "../config/multer.js";
+import NewsController from "../controllers/NewsController.js";
 
 routes.post("/register", UserController.create);
 routes.get("/showUser/:id", UserController.show);
@@ -20,7 +21,7 @@ routes.post("/notes", auth, AnotacaoController.create);
 routes.get("/readNotes/:id", auth, AnotacaoController.returnNotes);
 routes.get("/returnNotesById/:id", auth, AnotacaoController.returnNotesById);
 routes.put("/updateNotes/:id", auth, AnotacaoController.update);
-routes.delete("/deleteNotes/:id", AnotacaoController.delete);
+routes.delete("/deleteNotes/:id", auth, AnotacaoController.delete);
 
 routes.get("/species", EspecieController.returnAllEspecies);
 routes.get("/returnSpecieById/:id", EspecieController.returnSpeciesById);
@@ -30,4 +31,6 @@ routes.post(
   upload.single("file"),
   EspecieController.updatedPicture
 );
+
+routes.get("/news", NewsController.returnNews);
 export default routes;
