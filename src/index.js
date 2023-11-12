@@ -7,7 +7,7 @@ import cors from "cors";
 
 const app = express();
 app.use(cors({ 
-  
+  origin: "https://database-bf9ssgbhz-matheus-chiarellis-projects.vercel.app",
 }));
 dotenv.config();
 
