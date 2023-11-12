@@ -34,16 +34,6 @@ class EspecieController {
     }
   }
   
-  async returnAllEspecies(req, res) {
-    try {
-      const especies = await Especie.find();
-  
-      return res.status(200).json({ especies });
-    } catch (error) {
-      return res.status(500).json({ message: "Erro ao buscar especie", error });
-    }
-  }
-
   async returnSpeciesById(req, res) {
     try {
       const { id } = req.params;
@@ -60,29 +50,6 @@ class EspecieController {
     } catch (error) {}
   }
 
-  async updatedPicture(req, res) {
-    try {
-      if (req.file) {
-        const especieId = req.params.id;
-        const imageUrl = req.file.path;
-
-        // Atualize a URL da imagem no documento da espécie
-        const updatedEspecie = await Especie.findByIdAndUpdate(especieId, {
-          image_url: imageUrl,
-        });
-
-        if (!updatedEspecie) {
-          return res.status(404).json({ message: "Espécie não encontrada" });
-        }
-
-        return res.json({ message: "Upload de imagem bem-sucedido", imageUrl });
-      } else {
-        return res.status(400).json({ message: "Erro no upload de imagem" });
-      }
-    } catch (error) {
-      return res.status(500).json({ message: "Erro ao processar a imagem" });
-    }
-  }
 }
 
 export default new EspecieController();
