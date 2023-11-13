@@ -31,6 +31,4 @@ routes.get("/species", EspecieController.returnAllEspecies);
 routes.get("/returnSpecieById/:id", EspecieController.returnSpeciesById);
 routes.get("/readEspecies/:id", EspecieController.returnAllEspecies);
 
-routes.get("/news", NewsController.returnNews);
-
 export default routes;
