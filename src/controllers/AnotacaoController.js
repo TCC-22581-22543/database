@@ -84,6 +84,21 @@ class AnotacaoController {
 
     return res.status(200).json({ message: "Anotação deletada!" });
   }
+
+  async countUserAnotations(req, res) {
+    const { id } = req.user;
+
+    try {
+      const count = await Anotacao.count({ id_usuario: id });
+
+      return res.status(200).json({ count });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .json({ error: "Erro ao contar anotações do usuário." });
+    }
+  }
 }
 
 export default new AnotacaoController();

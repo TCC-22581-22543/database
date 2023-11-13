@@ -20,11 +20,16 @@ routes.post("/notes", auth, AnotacaoController.create);
 routes.get("/readNotes/:id", auth, AnotacaoController.returnNotes);
 routes.get("/returnNotesById/:id", auth, AnotacaoController.returnNotesById);
 routes.put("/updateNotes/:id", auth, AnotacaoController.update);
+routes.get(
+  "/countUserAnotations",
+  auth,
+  AnotacaoController.countUserAnotations
+);
 routes.delete("/deleteNotes/:id", auth, AnotacaoController.delete);
 
 routes.get("/species", EspecieController.returnAllEspecies);
 routes.get("/returnSpecieById/:id", EspecieController.returnSpeciesById);
-routes.get("/readEspecies/:id", EspecieController.read);
+routes.get("/readEspecies/:id", EspecieController.returnAllEspecies);
 
 routes.get("/news", NewsController.returnNews);
 

@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
+import Joi from "joi";
 
 class UserController {
   async create(req, res) {
@@ -118,8 +119,6 @@ class UserController {
 
     return res.status(200).json({ message: "Usuário deletado." });
   }
-
-  async recoverPassword(req, res) {}
 }
 
 export default new UserController();
