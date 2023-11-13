@@ -9,9 +9,6 @@ const app = express();
 app.use(cors());
 dotenv.config();
 
-app.use("/users");
-app.use("/password-reset", passwordResetRoutes);
-
 app.use(urlencoded({ extended: true }));
 app.use(json());
 app.use(routes);
